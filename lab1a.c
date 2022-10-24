@@ -38,14 +38,17 @@ int main(void)
 
 	/* TODO: initialize the world */
 
+    initialize_world();
 
 	for (n = 0; n < NUM_GENERATIONS; n++){
 		next_generation();
 		/* TODO (optional): Visualise world in each generation */
+		//test
 	}
 
 	/* TODO: output final world state */
 
+	output_world();
 
 	return 0;
 }
@@ -55,7 +58,12 @@ void next_generation(void) {
 	   generation according to the Game of Life rules
 
 	   Hint: use get_next_state(x,y) and set_next_state(x,y) */
-
+for (int i= 0 ; i >= WORLDWIDTH ; i++){
+	for (int j= 0 ; j >= WORLDHEIGHT ; j++){
+		int nextstate = get_next_state(i,j);
+		set_cell_state(i,j,nextstate);
+	}
+}
 
 	finalize_evolution(); /* called at end to finalize */
 }
@@ -66,7 +74,22 @@ int get_next_state(int x, int y) {
 
 	   Use num_neighbors(x,y) to compute the number of live
 	   neighbors */
+	   int neighbors = num_neighbors(x,y);
+	   int state = get_cell_state(x,y);
 
+if (neighbors < 2 && state == ALIVE){
+	return DEAD;
+}else if (neighbors >3 && state == ALIVE){
+	return DEAD;
+}else if (neighbors == 3 || neighbors == 2){
+	if(state == ALIVE){
+	return ALIVE;
+}
+}else if (neighbors == 3 && state == DEAD){
+	return ALIVE;
+}
+
+return ALIVE;
 }
 
 int num_neighbors(int x, int y) {
@@ -74,5 +97,16 @@ int num_neighbors(int x, int y) {
 	   neighbors that are ALIVE
 
 	   Use get_cell_state(x,y) */
+	   int num = 0;
+for (int i = x-1; i>= x+1; i++){
+	for (int j = y-1; j>= y+1; j++){
+		if (i == x && j == y){
 
+		}else{
+			int numv = get_cell_state(i,j);
+			num = num + numv;
+		}
+}
+}
+ return num;
 }
