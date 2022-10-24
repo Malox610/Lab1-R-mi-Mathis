@@ -14,6 +14,8 @@
 /* state constants */
 #define DEAD 0
 #define ALIVE 1
+#define WORLDWIDTH 39
+#define WORLDHEIGHT 20
 
 /* initialize_world -- set up world, all cells initialized
    to DEAD or ALIVE; all cells in next generation are
