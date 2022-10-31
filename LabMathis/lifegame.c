@@ -69,9 +69,11 @@ void save_world_to_file(const char * filename) {
    all the cells in the next generation to DEAD */
 void initialize_world(void) {
 	int i, j;
-
+	
 	for (i = 0; i < WORLDWIDTH; i++)
+	
 		for (j = 0; j < WORLDHEIGHT; j++)
+		
 			world[i][j] = nextstates[i][j] = DEAD;
 	/* pattern "glider" */
 	world[1][2] = ALIVE;
@@ -79,6 +81,14 @@ void initialize_world(void) {
 	world[3][2] = ALIVE;
 	world[3][3] = ALIVE;
 	world[2][3] = ALIVE;
+	
+	
+
+
+
+	output_world();
+	
+
 }
 
 int is_World_Empty(void) {
@@ -121,6 +131,7 @@ void finalize_evolution(void) {
 }
 
 void output_world(void) {
+	
 	char worldstr[2*WORLDWIDTH+2];
 	int i, j;
 
@@ -142,4 +153,6 @@ void output_world(void) {
 		worldstr[i] = '-';
 	worldstr[2*WORLDWIDTH] = '+';
 	puts(worldstr);
+
+		
 }
