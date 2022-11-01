@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include "lifegame.h"
 
@@ -26,25 +27,51 @@ static int world[WORLDWIDTH][WORLDHEIGHT];
 /* next generation cell states */
 static int nextstates[WORLDWIDTH][WORLDHEIGHT];
 
-/* functions to write for Part B of lab */
+
+
 void initialize_world_from_file(const char * filename) {
-	/* TODO: read the state of the world from a file with
-	   name "filename". Assume file exists, is readable, and
-	   the ith character of the jth line (zero-indexed) describes
-	   world[i][j] according to the characters CHAR_ALIVE and
-	   CHAR_DEAD
+	
+	FILE* ptr ;
+	int bufferLength = WORLDWIDTH;
+	char buffer[bufferLength]; 
+	int j =0 ;
 
-	   Assume a line does not contain more than 256 characters
-	   (including newline). If a line doesn't contain WORLDWIDTH
-	   characters, remaining cells in line are presumed DEAD.
-	   Similarly, if the file does not contain WORLDHEIGHT lines,
-	   remaining lines are presumed dead.
+	ptr= fopen(filename, "r");
+	for (int a = 0; a < WORLDWIDTH; a++)
+	{
+		for (int b = 0; b < WORLDHEIGHT; b++)
+		{
+			world[a][b] = nextstates[a][b] = DEAD;
+		}
+	}
 
-	   On error, print some useful error message and call abort().
 
-	   Also need to reset the next generation to DEAD
-	 */
+	while(fgets(buffer, bufferLength, ptr)) {
+		
+		if(j<WORLDHEIGHT)
+		{
+			for (int i = 0; i< WORLDWIDTH; i++)
+			{
+				
+				if(buffer[i]==42)
+				{
+					
+					world[i][j] =ALIVE ;
+				}
+				else
+				{
 
+					world[i][j] =DEAD ;
+				}
+					
+			}
+			j++;
+		}
+			
+	}
+	
+	fclose(ptr);
+	printf("\n");
 
 }
 
@@ -71,23 +98,20 @@ void initialize_world(void) {
 	int i, j;
 	
 	for (i = 0; i < WORLDWIDTH; i++)
-	
+	{
 		for (j = 0; j < WORLDHEIGHT; j++)
-		
+		{
 			world[i][j] = nextstates[i][j] = DEAD;
-	/* pattern "glider" */
-	world[1][2] = ALIVE;
-	world[3][1] = ALIVE;
-	world[3][2] = ALIVE;
-	world[3][3] = ALIVE;
-	world[2][3] = ALIVE;
+		}
+	}
+				/* pattern "glider" */
+				world[1][2] = ALIVE;
+				world[3][1] = ALIVE;
+				world[3][2] = ALIVE;
+				world[3][3] = ALIVE;
+				world[2][3] = ALIVE;
 	
-	
-
-
-
 	output_world();
-	
 
 }
 

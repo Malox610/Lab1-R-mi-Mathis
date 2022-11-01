@@ -46,7 +46,7 @@ int main(void)
 		next_generation();
 
 		/* TODO (optional): Visualise world in each generation */
-     	//System("clear");
+     	system("clear");
 		output_world();
 		sleep(1);
 	
@@ -54,7 +54,7 @@ int main(void)
 
 	/* TODO: output final world state */
 
-	output_world();
+	
 	return 0;
 }
 
@@ -70,7 +70,7 @@ void next_generation(void) {
 		   for(int j=0 ; j <= WORLDHEIGHT-1; j++)
 		    {  
 					nextstate = get_next_state(i,j);
-					printf("next state : %d\n" , nextstate);
+				
 					set_cell_state(i,j,nextstate);
 		    }
 		}
