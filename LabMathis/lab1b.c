@@ -15,7 +15,7 @@
 /* add whatever other includes here */
 
 /* number of generations to evolve the world */
-#define NUM_GENERATIONS 50
+#define NUM_GENERATIONS 5
 
 /* functions to implement -- can copy from Part A */
 
@@ -42,7 +42,8 @@ int main(int argc, char ** argv)
 	   if command line argument provided (argc > 1), or
 	   using hard-coded pattern (use Part A) otherwise */
 
-initialize_world_from_file("glider.txt");
+//initialize_world_from_file("glider.txt");
+initialize_world_from_file("world.txt");
 
 
 	for (n = 0; n < NUM_GENERATIONS; n++)
@@ -60,6 +61,7 @@ initialize_world_from_file("glider.txt");
 	   world to file "world.txt" in current directory */
 
 	output_world();
+	save_world_to_file("world.txt");
 	return 0;
 }
 

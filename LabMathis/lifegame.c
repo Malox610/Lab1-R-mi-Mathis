@@ -1,8 +1,8 @@
 /*
  * lifegame.c
  *
- *  Created on:
- *      Author:
+ *  Created on: 25 october 2022
+ *      Author: MAthis Esmiller and Rémi Teyssier
  */
 
 #include <stdio.h>
@@ -10,6 +10,7 @@
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 #include "lifegame.h"
 
@@ -87,7 +88,41 @@ void save_world_to_file(const char * filename) {
 	   it to resume a game later
 	 */
 
+	FILE* fh ;
+	int x , y ;
+	int cell_state ;
+	char cell ;
 
+	fh = fopen(filename,"w");
+	if(fh ==NULL)
+	{
+		printf("error opening the file");
+		abort();
+		
+	}
+	
+		for (x = 0; x < WORLDWIDTH; x++) 
+		{
+			for (y = 0; y < WORLDHEIGHT; y++) 
+			{
+				cell_state = world[x][y] ;
+				if(cell_state ==ALIVE )
+				{
+					cell = CHAR_ALIVE ;
+				}
+				else if(cell_state==DEAD)
+				{
+					cell = CHAR_DEAD ;
+				}
+					printf("%c",cell);
+				fputc(cell,fh);
+			}
+		fputc('\n',fh);
+		printf("\n");
+		}
+
+ 		  fclose(fh);
+	
 }
 
 /* you shouldn't need to edit anything below this line */
@@ -180,3 +215,5 @@ void output_world(void) {
 
 		
 }
+
+

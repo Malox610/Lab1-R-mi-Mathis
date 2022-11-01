@@ -52,6 +52,7 @@ void finalize_evolution(void);
 
 /* outputs the current world state to the console */
 void output_world(void);
+void output_world2(void);
 
 /* functions to implement for Part B */
 void initialize_world_from_file(const char * filename);
