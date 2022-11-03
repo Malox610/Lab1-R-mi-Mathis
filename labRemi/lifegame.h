@@ -11,11 +11,16 @@
 #ifndef LIFEGAME_H_
 #define LIFEGAME_H_
 
+#define WORLDWIDTH 39
+#define WORLDHEIGHT 20
+
+/* character representations of cell states */
+#define CHAR_ALIVE '*'
+#define CHAR_DEAD ' '
+
 /* state constants */
 #define DEAD 0
 #define ALIVE 1
-#define WORLDWIDTH 39
-#define WORLDHEIGHT 20
 
 /* initialize_world -- set up world, all cells initialized
    to DEAD or ALIVE; all cells in next generation are
@@ -47,6 +52,7 @@ void finalize_evolution(void);
 
 /* outputs the current world state to the console */
 void output_world(void);
+
 
 /* functions to implement for Part B */
 void initialize_world_from_file(const char * filename);
