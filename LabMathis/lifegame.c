@@ -33,9 +33,12 @@ static int nextstates[WORLDWIDTH][WORLDHEIGHT];
 void initialize_world_from_file(const char * filename) {
 	
 	FILE* ptr ;
-	int bufferLength = WORLDWIDTH;
-	char buffer[bufferLength]; 
+	
+	int i =0 ;
 	int j =0 ;
+	
+	char cell =0;
+
 
 	ptr= fopen(filename, "r");
 	for (int a = 0; a < WORLDWIDTH; a++)
@@ -47,32 +50,34 @@ void initialize_world_from_file(const char * filename) {
 	}
 
 
-	while(fgets(buffer, bufferLength, ptr)) {
-		
-		if(j<WORLDHEIGHT)
+ 	for(j=0;j< WORLDHEIGHT;j++)
+	{
+	while(fread(&cell,1,1, ptr))
+	{
+		if (i == 39  || cell =='\n' )
 		{
-			for (int i = 0; i< WORLDWIDTH; i++)
+			break;
+		}
+		else
+		{
+			if(cell==CHAR_ALIVE)
 			{
-				
-				if(buffer[i]==42)
-				{
-					
-					world[i][j] =ALIVE ;
-				}
-				else
-				{
-
-					world[i][j] =DEAD ;
-				}
-					
+				world[i][j]=ALIVE ;
 			}
-			j++;
+			else
+			{
+				world[i][j]=DEAD ;
+			}
+ 				i++;
 		}
 			
+		
 	}
-	
+	i=0;
+	}
+
 	fclose(ptr);
-	printf("\n");
+
 
 }
 
@@ -91,9 +96,9 @@ void save_world_to_file(const char * filename) {
 	FILE* fh ;
 	int x , y ;
 	int cell_state ;
-	char cell ;
 
-	fh = fopen(filename,"w");
+
+	fh = fopen(filename,"w+");
 	if(fh ==NULL)
 	{
 		printf("error opening the file");
@@ -101,26 +106,24 @@ void save_world_to_file(const char * filename) {
 		
 	}
 	
-		for (x = 0; x < WORLDWIDTH; x++) 
+		for (x = 0; x < WORLDHEIGHT; x++) 
 		{
-			for (y = 0; y < WORLDHEIGHT; y++) 
+			for (y = 0; y < WORLDWIDTH; y++) 
 			{
-				cell_state = world[x][y] ;
+				cell_state = world[y][x] ;
 				if(cell_state ==ALIVE )
 				{
-					cell = CHAR_ALIVE ;
+					
+					fputc(CHAR_ALIVE,fh);
 				}
 				else if(cell_state==DEAD)
 				{
-					cell = CHAR_DEAD ;
+					fputc(CHAR_DEAD,fh);
 				}
-					printf("%c",cell);
-				fputc(cell,fh);
+			
 			}
 		fputc('\n',fh);
-		printf("\n");
 		}
-
  		  fclose(fh);
 	
 }
