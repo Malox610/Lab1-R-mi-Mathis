@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <fcntl.h>
-#include <unistd.h>
+
+
 
 #include "lifegame.h"
 
@@ -34,13 +34,14 @@ void initialize_world_from_file(const char * filename) {
 	
 	FILE* ptr ;
 	
-	int i =0 ;
-	int j =0 ;
+	int i =0 ; //for the n char of a line
+	int j =0 ;//for the n line of a file
 	
 	char cell =0;
 
 
-	ptr= fopen(filename, "r");
+	ptr= fopen(filename, "r"); 
+	//We initialize the world with only dead cell
 	for (int a = 0; a < WORLDWIDTH; a++)
 	{
 		for (int b = 0; b < WORLDHEIGHT; b++)
@@ -51,29 +52,31 @@ void initialize_world_from_file(const char * filename) {
 
 
  	for(j=0;j< WORLDHEIGHT;j++)
-	{
-	while(fread(&cell,1,1, ptr))
-	{
-		if (i == 39  || cell =='\n' )
-		{
-			break;
-		}
-		else
-		{
-			if(cell==CHAR_ALIVE)
-			{
-				world[i][j]=ALIVE ;
+	{// we parcours each line of the file 
+			while(fread(&cell,1,1, ptr))
+			{ //we parcours each character of a line
+				if (i == 39  || cell =='\n' ) 
+				{
+					break;
+				}
+				else
+				{
+					
+					if(cell==CHAR_ALIVE)
+					{
+						world[i][j]=ALIVE ;
+					}
+					else
+					{
+						world[i][j]=DEAD ;
+					}
+						i++;
+				}
+					
+				
 			}
-			else
-			{
-				world[i][j]=DEAD ;
-			}
- 				i++;
-		}
-			
-		
-	}
-	i=0;
+			//when we reach the end of the line we go on the next line  and reset the i counter 
+			i=0;
 	}
 
 	fclose(ptr);
@@ -99,21 +102,20 @@ void save_world_to_file(const char * filename) {
 
 
 	fh = fopen(filename,"w+");
-	if(fh ==NULL)
+	if(fh ==NULL) //if the file is not open we end the programm
 	{
 		printf("error opening the file");
 		abort();
 		
 	}
 	
-		for (x = 0; x < WORLDHEIGHT; x++) 
+		for (x = 0; x < WORLDHEIGHT; x++) // we parcour the 2d array to know the state of each cell and put it in the file at the same position
 		{
 			for (y = 0; y < WORLDWIDTH; y++) 
 			{
 				cell_state = world[y][x] ;
 				if(cell_state ==ALIVE )
-				{
-					
+				{ 
 					fputc(CHAR_ALIVE,fh);
 				}
 				else if(cell_state==DEAD)

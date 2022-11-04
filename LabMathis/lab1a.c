@@ -14,7 +14,7 @@
 /* add whatever other includes here */
 
 /* number of generations to evolve the world */
-#define NUM_GENERATIONS 50
+#define NUM_GENERATIONS 5
 /* functions to implement */
 
 /* this function should set the state of all
@@ -54,7 +54,7 @@ int main(void)
 
 	/* TODO: output final world state */
 
-	
+		output_world();
 	return 0;
 }
 
@@ -88,11 +88,11 @@ int get_next_state(int x, int y) {
 	   neighbors */
        int neighbors =0 ;
 	   
-	    neighbors = num_neighbors(x,y);
+	    neighbors = num_neighbors(x,y); //we get the number of cell alive next to the cell
 		
-	   int state =get_cell_state(x,y);
+	   int state =get_cell_state(x,y);// we get the state of the cell
 
-     
+
 	   if(neighbors<2 && state == ALIVE )
 	   {
 		nextstate=DEAD ;
@@ -129,7 +129,8 @@ int num_neighbors(int x, int y) {
 
 	   Use get_cell_state(x,y) */
 	   int neighbors =0; 
-
+	
+		//we parcours all the neighbors of the cell and their state 
 	   for (int i = x-1 ; i<=x+1 ; i++)
 	   {
      	   for (int j = y-1 ; j<=y+1 ; j++)
@@ -137,14 +138,15 @@ int num_neighbors(int x, int y) {
 			
 				if(i==x && j==y)
 				{
-					
+				
 				}else{
-					int neighbor_cell_state = get_cell_state(i,j);
+						int neighbor_cell_state = get_cell_state(i,j);
 					if( neighbor_cell_state == ALIVE)
 					{
 						neighbors++; 
 						
 					}
+					
 				}
 	  		}
 	   }

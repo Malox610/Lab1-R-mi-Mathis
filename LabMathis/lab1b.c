@@ -15,7 +15,7 @@
 /* add whatever other includes here */
 
 /* number of generations to evolve the world */
-#define NUM_GENERATIONS 2
+#define NUM_GENERATIONS 50
 
 /* functions to implement -- can copy from Part A */
 
